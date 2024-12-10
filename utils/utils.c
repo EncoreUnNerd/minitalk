@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:15:34 by mhenin            #+#    #+#             */
-/*   Updated: 2024/12/10 15:27:40 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/12/10 16:59:17 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,19 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		res[l++] = s2[i++];
 	res[l] = '\0';
 	return (res);
+}
+
+int	is_pid(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] >= '0' && str[i] <= '9')
+			i++;
+		else
+			return (0);
+	}
+	return (1);
 }

@@ -6,14 +6,11 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:14:01 by mhenin            #+#    #+#             */
-/*   Updated: 2024/12/10 16:04:14 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/12/10 16:37:16 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
-
-
-//     ft_printf("PID de l'expéditeur : %d\n", info->si_pid);
 
 int	end_char(int *index, char **buffer, siginfo_t *info)
 {
@@ -51,15 +48,15 @@ void	handler(int signo, siginfo_t *info, void *context)
 
 void	init(void)
 {
-	struct sigaction action;
-	
+	struct sigaction	action;
+
 	action.sa_sigaction = handler;
 	action.sa_flags = SA_SIGINFO;
 	sigaction(SIGUSR1, &action, NULL);
 	sigaction(SIGUSR2, &action, NULL);
 }
 
-int main(void)
+int	main(void)
 {
 	ft_printf("%i", getpid());
 	init();
