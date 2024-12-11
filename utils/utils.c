@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:15:34 by mhenin            #+#    #+#             */
-/*   Updated: 2024/12/10 17:50:25 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/12/11 09:58:41 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,50 +47,17 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strdup(const char *src)
+void	*ft_memset(void *ptr, int value, size_t n)
 {
-	char	*res;
 	size_t	i;
 
-	res = (char *)malloc(sizeof(char) * (ft_strlen(src) + 1));
-	if (!res)
-		return (NULL);
 	i = 0;
-	while (src[i])
+	while (i < n)
 	{
-		res[i] = src[i];
+		((unsigned char *)ptr)[i] = (unsigned char)value;
 		i++;
 	}
-	res[i] = '\0';
-	return (res);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*res;
-	int		i;
-	int		l;
-	size_t	s1_len;
-	size_t	s2_len;
-
-	i = 0;
-	l = 0;
-	if (!s2)
-		return (NULL);
-	if (!s1)
-		return (ft_strdup(s2));
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	res = malloc((s1_len + s2_len + 1) * sizeof(char));
-	if (!res)
-		return (NULL);
-	while (s1[i])
-		res[l++] = s1[i++];
-	i = 0;
-	while (s2[i])
-		res[l++] = s2[i++];
-	res[l] = '\0';
-	return (res);
+	return (ptr);
 }
 
 int	is_pid(char *str)

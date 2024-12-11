@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:14:01 by mhenin            #+#    #+#             */
-/*   Updated: 2024/12/10 17:50:18 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/12/11 10:19:46 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,38 @@ int	end_char(int *index, char **buffer, siginfo_t *info)
 	return (7);
 }
 
+char	*memory_buffer(char *buffer, int *max_index)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	tmp = malloc(sizeof(char) * ((*max_index) * 2));
+	ft_memset(tmp, 'i', (*max_index) * 2);
+	while (i < *max_index)
+	{
+		tmp[i] = buffer[i];
+		i++;
+	}
+	*max_index *= 2;
+	return (free(buffer), tmp);
+}
+
 void	handler(int signo, siginfo_t *info, void *context)
 {
 	static char	*buffer = NULL;
 	static int	i = 7;
 	static int	index = 0;
+	static int	max_index = 256;
 
 	(void)context;
-	(void)info;
-	if (i == 7)
-		buffer = ft_strjoin(buffer, "i");
+	if (buffer == NULL)
+	{
+		buffer = malloc(sizeof(char) * max_index);
+		buffer = ft_memset(buffer, 'i', max_index);
+	}
+	else if (index == max_index)
+		buffer = memory_buffer(buffer, &max_index);
 	if (signo == SIGUSR1)
 		buffer[index] |= (1 << i);
 	else if (signo == SIGUSR2)
