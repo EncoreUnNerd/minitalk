@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:14:01 by mhenin            #+#    #+#             */
-/*   Updated: 2024/12/11 10:19:46 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/12/14 16:22:33 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,14 @@ void	handler(int signo, siginfo_t *info, void *context)
 	i--;
 	if (i < 0)
 		i = end_char(&index, &buffer, info);
+	kill(info->si_pid, SIGUSR2);
 }
 
 void	init(void)
 {
 	struct sigaction	action;
 
+	action = (struct sigaction){0};
 	action.sa_sigaction = handler;
 	action.sa_flags = SA_SIGINFO;
 	sigaction(SIGUSR1, &action, NULL);
