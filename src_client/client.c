@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:33:59 by mhenin            #+#    #+#             */
-/*   Updated: 2024/12/14 16:26:31 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/12/15 01:13:52 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	send_letter(char c, int pid)
 		else
 			kill(pid, SIGUSR2);
 		g_can_send = 0;
-		while (g_can_send == 0)
+		while (!g_can_send)
 			usleep(50);
 	}
 }
@@ -47,10 +47,8 @@ void	send(char *str, int pid)
 	printf("%i", str[i]);
 }
 
-void	handler(int signo, siginfo_t *info, void *context)
+void	handler(int signo)
 {
-	(void)info;
-	(void)context;
 	if (signo == SIGUSR1)
 	{
 		ft_printf("Message bien reçu\n");
@@ -65,7 +63,7 @@ void	init(void)
 	struct sigaction	action;
 
 	action = (struct sigaction){0};
-	action.sa_sigaction = handler;
+	action.sa_handler = handler;
 	sigaction(SIGUSR1, &action, NULL);
 	sigaction(SIGUSR2, &action, NULL);
 }
