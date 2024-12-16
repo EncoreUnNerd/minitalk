@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:14:01 by mhenin            #+#    #+#             */
-/*   Updated: 2024/12/16 12:07:52 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/12/16 12:19:18 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,8 @@ void	init(void)
 
 int	main(void)
 {
-	int e;
 	ft_printf("Server PID : %i \n", getpid());
-	e = getpid();
 	init();
 	while (1)
-		pause() ;
+		pause();
 }
