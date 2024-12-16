@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:14:01 by mhenin            #+#    #+#             */
-/*   Updated: 2024/12/16 15:28:55 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/12/16 15:30:56 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*memory_buffer(char *buffer, int *max_index)
 	char	*tmp;
 
 	i = 0;
-	tmp = NULL;//malloc(sizeof(char) * ((*max_index) * 2));
+	tmp = malloc(sizeof(char) * ((*max_index) * 2));
 	if (!tmp)
 	{
 		free(buffer);
