@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:33:59 by mhenin            #+#    #+#             */
-/*   Updated: 2024/12/15 01:13:52 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/12/16 12:13:24 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ void	send_letter(char c, int pid)
 	while (j--)
 	{
 		e = c >> j & 1;
+		g_can_send = 0;
 		if (e == 1)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		g_can_send = 0;
-		while (!g_can_send)
-			usleep(50);
+		while (g_can_send == 0)
+			usleep(500);
 	}
 }
 
@@ -49,13 +49,13 @@ void	send(char *str, int pid)
 
 void	handler(int signo)
 {
-	if (signo == SIGUSR1)
+	if (signo == SIGUSR2)
+		g_can_send = 1;
+	else if (signo == SIGUSR1)
 	{
 		ft_printf("Message bien reçu\n");
 		exit(0);
 	}
-	if (signo == SIGUSR2)
-		g_can_send = 1;
 }
 
 void	init(void)

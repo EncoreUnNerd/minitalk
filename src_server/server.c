@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:14:01 by mhenin            #+#    #+#             */
-/*   Updated: 2024/12/15 01:00:40 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/12/16 12:07:52 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	end_char(int *index, char **buffer, siginfo_t *info)
 {
-	if ((*buffer)[*index] == '\0')
+	if ((*buffer)[*index] == 0)
 	{
-		ft_printf("\n%s", *buffer);
+		ft_printf("%s", *buffer);
 		free(*buffer);
 		*index = 0;
 		*buffer = NULL;
@@ -34,7 +34,7 @@ char	*memory_buffer(char *buffer, int *max_index)
 
 	i = 0;
 	tmp = malloc(sizeof(char) * ((*max_index) * 2));
-	ft_memset(tmp, 'i', (*max_index) * 2);
+	ft_memset(tmp, 0, (*max_index) * 2);
 	while (i < *max_index)
 	{
 		tmp[i] = buffer[i];
@@ -55,7 +55,7 @@ void	handler(int signo, siginfo_t *info, void *context)
 	if (buffer == NULL)
 	{
 		buffer = malloc(sizeof(char) * max_index);
-		buffer = ft_memset(buffer, 'i', max_index);
+		buffer = ft_memset(buffer, 0, max_index);
 	}
 	else if (index == max_index)
 		buffer = memory_buffer(buffer, &max_index);
@@ -65,7 +65,9 @@ void	handler(int signo, siginfo_t *info, void *context)
 		buffer[index] &= ~(1 << i);
 	i--;
 	if (i < 0)
+	{
 		i = end_char(&index, &buffer, info);
+	}
 	kill(info->si_pid, SIGUSR2);
 }
 
@@ -82,8 +84,10 @@ void	init(void)
 
 int	main(void)
 {
-	ft_printf("%i", getpid());
+	int e;
+	ft_printf("Server PID : %i \n", getpid());
+	e = getpid();
 	init();
 	while (1)
-		continue ;
+		pause() ;
 }
