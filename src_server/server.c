@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:14:01 by mhenin            #+#    #+#             */
-/*   Updated: 2024/12/16 12:19:18 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/12/16 12:46:45 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	handler(int signo, siginfo_t *info, void *context)
 	{
 		i = end_char(&index, &buffer, info);
 	}
-	kill(info->si_pid, SIGUSR2);
+	if (buffer != NULL)
+		kill(info->si_pid, SIGUSR2);
 }
 
 void	init(void)

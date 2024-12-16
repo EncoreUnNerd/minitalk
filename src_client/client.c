@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:33:59 by mhenin            #+#    #+#             */
-/*   Updated: 2024/12/16 12:13:24 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/12/16 12:45:53 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	send(char *str, int pid)
 		i++;
 	}
 	send_letter(str[i], pid);
-	printf("%i", str[i]);
 }
 
 void	handler(int signo)
@@ -75,7 +74,5 @@ int	main(int ac, char **av)
 		g_can_send = 1;
 		init();
 		send(av[2], ft_atoi(av[1]));
-		while (1)
-			continue ;
 	}
 }
