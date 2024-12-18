@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:33:59 by mhenin            #+#    #+#             */
-/*   Updated: 2024/12/16 15:00:02 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/12/18 10:01:48 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,15 @@ void	send_letter(char c, int pid)
 		e = c >> j & 1;
 		g_can_send = 0;
 		if (e == 1)
-			kill(pid, SIGUSR1);
+		{
+			if (kill(pid, SIGUSR1) == -1)
+				exit(1);
+		}
 		else
-			kill(pid, SIGUSR2);
+		{
+			if (kill(pid, SIGUSR2) == -1)
+				exit(1);
+		}
 		while (g_can_send == 0)
 			usleep(500);
 	}
@@ -61,10 +67,12 @@ void	init(void)
 {
 	struct sigaction	action;
 
-	action = (struct sigaction){0};
+	ft_memset(&action, 0, sizeof(action));
 	action.sa_handler = handler;
-	sigaction(SIGUSR1, &action, NULL);
-	sigaction(SIGUSR2, &action, NULL);
+	if (sigaction(SIGUSR1, &action, NULL) == -1)
+		exit(1);
+	if (sigaction(SIGUSR2, &action, NULL) == -1)
+		exit(1);
 }
 
 int	main(int ac, char **av)

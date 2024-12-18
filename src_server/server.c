@@ -6,21 +6,23 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:14:01 by mhenin            #+#    #+#             */
-/*   Updated: 2024/12/16 15:30:56 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/12/18 10:13:58 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
 
-int	end_char(int *index, char **buffer, siginfo_t *info)
+int	end_char(int *index, int *max_index, char **buffer, siginfo_t *info)
 {
 	if ((*buffer)[*index] == 0)
 	{
 		ft_printf("%s", *buffer);
 		free(*buffer);
 		*index = 0;
+		*max_index = 0;
 		*buffer = NULL;
-		kill(info->si_pid, SIGUSR1);
+		if (kill(info->si_pid, SIGUSR1) == -1)
+			exit(1);
 		return (7);
 	}
 	*index = *index + 1;
@@ -72,20 +74,22 @@ void	handler(int signo, siginfo_t *info, void *context)
 		buffer[index] &= ~(1 << i);
 	i--;
 	if (i < 0)
-		i = end_char(&index, &buffer, info);
+		i = end_char(&index, &max_index, &buffer, info);
 	if (buffer != NULL)
-		kill(info->si_pid, SIGUSR2);
+		verif_kill(info, &buffer);
 }
 
 void	init(void)
 {
 	struct sigaction	action;
 
-	action = (struct sigaction){0};
+	ft_memset(&action, 0, sizeof(action));
 	action.sa_sigaction = handler;
 	action.sa_flags = SA_SIGINFO;
-	sigaction(SIGUSR1, &action, NULL);
-	sigaction(SIGUSR2, &action, NULL);
+	if (sigaction(SIGUSR1, &action, NULL) == -1)
+		exit(1);
+	if (sigaction(SIGUSR2, &action, NULL) == -1)
+		exit(1);
 }
 
 int	main(void)

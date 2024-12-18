@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:15:34 by mhenin            #+#    #+#             */
-/*   Updated: 2024/12/16 12:18:36 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/12/18 10:04:58 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,13 @@ int	is_pid(char *str)
 			return (0);
 	}
 	return (1);
+}
+
+void	verif_kill(siginfo_t *info, char **buffer)
+{
+	if (kill(info->si_pid, SIGUSR2) == -1)
+	{
+		free(*buffer);
+		exit(1);
+	}
 }
