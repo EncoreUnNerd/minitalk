@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:14:01 by mhenin            #+#    #+#             */
-/*   Updated: 2024/12/18 10:13:58 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/12/18 10:36:30 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,25 @@ int	end_char(int *index, int *max_index, char **buffer, siginfo_t *info)
 {
 	if ((*buffer)[*index] == 0)
 	{
+		ft_printf("1");
 		ft_printf("%s", *buffer);
+		ft_printf("2");
 		free(*buffer);
-		*index = 0;
-		*max_index = 0;
+		ft_printf("3");
 		*buffer = NULL;
+		ft_printf("4");
+		*index = 0;
+		ft_printf("5");
+		*max_index = 256;
+		ft_printf("6");
 		if (kill(info->si_pid, SIGUSR1) == -1)
 			exit(1);
+		ft_printf("8");
 		return (7);
 	}
+	ft_printf("-1");
 	*index = *index + 1;
+	ft_printf("0");
 	return (7);
 }
 
