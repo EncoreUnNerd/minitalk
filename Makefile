@@ -12,7 +12,7 @@ OBJS_SERVER = src_server/$(SRC_SERVER:.c=.o)
 OBJS_UTILS = utils/$(UTILS:.c=.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME_CLIENT) $(NAME_SERVER)
 
