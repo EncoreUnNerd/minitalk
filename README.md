@@ -1,4 +1,4 @@
-# 👉 minitalk
+# 💬 minitalk
 
 Welcome to the repo of my “minitalk” project from 42 school.
 
