@@ -12,7 +12,6 @@ $(NAME) : $(OBJS)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
-	@printf "."
 
 clean:
 	@rm -f $(OBJS)
